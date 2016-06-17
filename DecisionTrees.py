@@ -1,18 +1,20 @@
-#Applying Adaboost on the final data
+#Applying Decision trees on the final data
 
 from sklearn.cross_validation import cross_val_score
-from sklearn.ensemble import AdaBoostClassifier
+from sklearn import tree
 import pandas as pd
+import numpy as np
 
-file = 'C:\Users\prath\Desktop\Capstone\TimeLine_Data_Final.csv' #File created from "Get_Top6_Merge.py"
+file = 'C:\Users\prath\Desktop\Capstone\TimeLine_Data_Final.csv'
 
 df = pd.read_csv(file, index_col=False)
 df = df.drop('NumberOfTestsTaken', 1)
 df = df.drop('PID', 1)
 
+#df = df.iloc[np.random.permutation(len(df))]
 dataset = df.ix[:, df.columns != 'Infection']
 
-clf = AdaBoostClassifier(n_estimators=100)
+clf = tree.DecisionTreeClassifier()
 
 scores_accuracy = cross_val_score(clf, dataset, df.Infection.values, cv=10, scoring='accuracy')
 print("Accuracy: %0.2f (+/- %0.2f) " % (scores_accuracy.mean(), scores_accuracy.std()))

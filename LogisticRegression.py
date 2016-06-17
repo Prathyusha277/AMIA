@@ -1,11 +1,16 @@
+#Applying LR on final data
 from sklearn.cross_validation import cross_val_score
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
+import numpy as np
 
-file = 'C:\Users\prath\Desktop\Capstone\AMIA_Annie_emergency.csv'
+file = 'C:\Users\prath\Desktop\Capstone\TimeLine_Data_Final.csv'
 
 df = pd.read_csv(file, index_col=False)
-#df = df.iloc[np.random.permutation(len(df))]
+df = df.drop('NumberOfTestsTaken', 1)
+df = df.drop('PID', 1)
+
+df = df.iloc[np.random.permutation(len(df))]
 dataset = df.ix[:, df.columns != 'Infection']
 
 clf = LogisticRegression()
